@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Convite de Padrinhos | Jackelyne & Joadson</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --rose:#e8a7b6;
+      --marsala:#6f2b3a;
+      --gold:#c9a24b;
+      --ink:#2b2b2b;
+      --shadow: 0 18px 45px rgba(0,0,0,.25);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(111,43,58,.55), rgba(232,167,182,.55)),
+        url("assets/img/floral-bg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x:hidden;
+    }
+
+    /* BLOQUEIO TOTAL: tudo que estiver hidden some SEM CHANCE de conflito */
+    [hidden]{ display:none !important; }
+
+    .veil{
+      min-height:100vh;
+      background: radial-gradient(circle at top, rgba(255,250,246,.92), rgba(255,250,246,.78));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 28px 14px;
+    }
+
+    .frame{
+      width:min(980px, 100%);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(201,162,75,.35);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .topbar{
+      height: 10px;
+      background: linear-gradient(90deg, transparent, rgba(201,162,75,.9), transparent);
+    }
+
+    .content{
+      padding: 30px 18px 24px;
+    }
+
+    .title{
+      text-align:center;
+      margin: 12px 0 6px;
+      font-family: "Cormorant Garamond", serif;
+      letter-spacing: .5px;
+      color: var(--marsala);
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 700;
+    }
+
+    .subtitle{
+      text-align:center;
+      margin: 0 0 18px;
+      font-size: 14px;
+      color: rgba(111,43,58,.92);
+      font-weight: 600;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+
+    .divider{
+      width: 140px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,162,75,1), transparent);
+      margin: 18px auto;
+    }
+
+    /* ===== Etapa 1: Carta ===== */
+    .letter-stage{
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+      justify-content:center;
+      padding: 26px 16px 34px;
+      gap: 18px;
+    }
+
+    .envelope{
+      width:min(520px, 100%);
+      background: linear-gradient(180deg, rgba(255,250,246,.96), rgba(255,250,246,.86));
+      border: 1px solid rgba(111,43,58,.25);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .envelope:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(232,167,182,.25), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(201,162,75,.22), transparent 50%),
+        radial-gradient(circle at 50% 90%, rgba(111,43,58,.12), transparent 55%);
+      pointer-events:none;
+    }
+
+    /* Tampa */
+    .flap{
+      position:absolute;
+      left:-2px;
+      right:-2px;
+      top:-2px;
+      height: 58%;
+      background: linear-gradient(180deg, rgba(111,43,58,.10), rgba(255,250,246,.85));
+      border-bottom: 1px solid rgba(111,43,58,.18);
+      clip-path: polygon(0 0, 100% 0, 50% 92%);
+      transform-origin: 50% 0%;
+      transform: rotateX(0deg);
+      transition: transform 900ms cubic-bezier(.22,1,.36,1);
+      z-index: 4;
+    }
+
+    /* Papel interno */
+    .paper-sheet{ position:relative; padding: 18px; z-index: 2; }
+    .paper-sheet-inner{
+      padding: 10px 0 6px;
+      transform: translateY(24px);
+      transition: transform 900ms cubic-bezier(.22,1,.36,1);
+      position:relative;
+      z-index: 2;
+      text-align:center;
+    }
+
+    /* Laço */
+    .ribbon{ position:absolute; inset:0; z-index:6; pointer-events:none; }
+    .ribbon-vert{
+      position:absolute; top:-8%; bottom:-8%; left:50%;
+      width:44px; transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(111,43,58,.95), rgba(232,167,182,.92));
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+      border-left: 1px solid rgba(255,255,255,.25);
+      border-right: 1px solid rgba(255,255,255,.18);
+    }
+    .ribbon-horz{
+      position:absolute; left:-8%; right:-8%; top:48%;
+      height:44px; transform: translateY(-50%);
+      background: linear-gradient(90deg, rgba(111,43,58,.95), rgba(232,167,182,.92));
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+      border-top: 1px solid rgba(255,255,255,.20);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .bow{
+      position:absolute; left:50%; top:48%;
+      transform: translate(-50%,-50%);
+      width:150px; height:92px;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.18));
+    }
+    .bow .knot{
+      position:absolute; left:50%; top:50%;
+      width:34px; height:34px;
+      transform: translate(-50%,-50%);
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(201,162,75,.95));
+      border: 1px solid rgba(111,43,58,.25);
+    }
+    .bow .loop{
+      position:absolute; top:18px;
+      width:66px; height:46px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(111,43,58,.96), rgba(232,167,182,.92));
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .bow .loop.left{ left: 6px; transform: rotate(-10deg); }
+    .bow .loop.right{ right: 6px; transform: rotate(10deg); }
+    .bow .tail{
+      position:absolute; top:54px;
+      width:44px; height:54px;
+      background: linear-gradient(180deg, rgba(111,43,58,.96), rgba(232,167,182,.92));
+      clip-path: polygon(0 0,100% 0,100% 78%,50% 100%,0 78%);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+    .bow .tail.left{ left: 44px; transform: rotate(10deg); }
+    .bow .tail.right{ right: 44px; transform: rotate(-10deg); }
+
+    .seal{
+      width: 62px; height: 62px; border-radius: 999px;
+      margin: 6px auto 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), rgba(201,162,75,.95));
+      border: 2px solid rgba(111,43,58,.25);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 10px 20px rgba(0,0,0,.18));
+    }
+    .seal span{
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+      color: var(--marsala);
+      font-weight: 700;
+    }
+    .envelope-h1{
+      font-family:"Cormorant Garamond", serif;
+      margin: 0;
+      font-size: 28px;
+      color: var(--marsala);
+      font-weight: 700;
+    }
+    .envelope-p{
+      margin: 10px auto 0;
+      max-width: 42ch;
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(43,43,43,.9);
+    }
+
+    /* Animação do abrir */
+    .envelope.opening .ribbon{
+      animation: ribbonOff 680ms cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes ribbonOff{
+      to{ opacity:0; transform: translateY(14px) scale(.92); }
+    }
+    .envelope.opening .flap{ transform: rotateX(170deg); }
+    .envelope.opening .paper-sheet-inner{ transform: translateY(-6px); }
+    .envelope.opening .bow{ animation: bowWiggle 420ms ease-out forwards; }
+    @keyframes bowWiggle{
+      0%{ transform: translate(-50%,-50%) rotate(0deg); }
+      55%{ transform: translate(-50%,-50%) rotate(4deg); }
+      100%{ transform: translate(-50%,-50%) rotate(0deg); }
+    }
+
+    /* Botão fora do laço */
+    .open-area{ text-align:center; }
+    .open-btn{
+      border:none;
+      cursor:pointer;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(111,43,58,1), rgba(232,167,182,1));
+      color:#fff;
+      font-weight: 700;
+      letter-spacing:.4px;
+      box-shadow: 0 12px 24px rgba(111,43,58,.24);
+      transition: transform .12s ease, filter .12s ease, opacity .2s ease;
+    }
+    .open-btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .open-btn:active{ transform: translateY(1px); }
+    .open-btn:disabled{ opacity:.65; cursor:not-allowed; }
+    .hint{
+      font-size: 13px;
+      color: rgba(111,43,58,.85);
+      margin: 10px 0 0;
+    }
+
+    /* ===== Etapa 2: Convite ===== */
+    .invite{ padding: 6px 10px 10px; }
+
+    .paper{
+      background: linear-gradient(180deg, rgba(255,250,246,.95), rgba(255,250,246,.86));
+      border: 1px solid rgba(201,162,75,.35);
+      border-radius: 16px;
+      padding: 22px 18px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+    }
+
+    .msg{
+      font-family: "Cormorant Garamond", serif;
+      font-size: 20px;
+      line-height: 1.65;
+      color: rgba(43,43,43,.92);
+      margin: 0;
+    }
+    .msg strong{ color: var(--marsala); }
+
+    .signature{
+      margin-top: 14px;
+      font-family:"Cormorant Garamond", serif;
+      font-weight: 700;
+      color: var(--marsala);
+      font-size: 22px;
+      text-align:right;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (min-width: 820px){
+      .content{ padding: 36px 34px 30px; }
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .box{
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(111,43,58,.18);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .box h3{
+      margin: 4px 0 10px;
+      font-family:"Cormorant Garamond", serif;
+      color: var(--marsala);
+      font-size: 22px;
+    }
+
+    /* imagens */
+    .traje-img{
+      width:100%;
+      border-radius:14px;
+      box-shadow: 0 10px 20px rgba(0,0,0,.12);
+      display:block;
+    }
+
+    .actions{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    @media (min-width: 620px){
+      .actions{ flex-direction: row; justify-content:center; }
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      text-decoration:none;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing:.3px;
+      border: 1px solid rgba(201,162,75,.55);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12);
+      transition: transform .12s ease, filter .12s ease;
+      text-align:center;
+      min-width: 220px;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(111,43,58,1), rgba(232,167,182,1));
+      color: #fff;
+      border-color: rgba(255,255,255,.25);
+    }
+    .btn-secondary{
+      background: rgba(255,250,246,.9);
+      color: var(--marsala);
+    }
+
+    .docs{
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,250,246,.7);
+      border: 1px solid rgba(201,162,75,.25);
+    }
+    .docs h4{
+      margin: 0 0 8px;
+      font-family:"Cormorant Garamond", serif;
+      color: var(--marsala);
+      font-size: 20px;
+    }
+    .docs ul{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(43,43,43,.88);
+      line-height: 1.6;
+    }
+
+    audio{ display:none; }
+
+    .footer{
+      text-align:center;
+      font-size: 12px;
+      color: rgba(111,43,58,.78);
+      padding: 16px 10px 22px;
+    }
+
+    /* ===== Animação ao rolar ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: .2s; }
+    .reveal.delay-2 { transition-delay: .4s; }
+    .reveal.delay-3 { transition-delay: .6s; }
+  </style>
+</head>
+
+<body>
+  <div class="veil">
+    <main class="frame" role="main">
+      <div class="topbar"></div>
+
+      <div class="content">
+        <h1 class="title">Convite de Padrinhos</h1>
+        <p class="subtitle">Jackelyne &amp; Joadson</p>
+        <div class="divider"></div>
+
+        <!-- ETAPA 1 (visível no início) -->
+        <section class="letter-stage" id="stageLetter">
+          <div class="envelope" id="envelope" aria-label="Carta do convite">
+            <div class="ribbon" aria-hidden="true">
+              <div class="ribbon-vert"></div>
+              <div class="ribbon-horz"></div>
+              <div class="bow">
+                <span class="loop left"></span>
+                <span class="loop right"></span>
+                <span class="knot"></span>
+                <span class="tail left"></span>
+                <span class="tail right"></span>
+              </div>
+            </div>
+
+            <div class="flap" aria-hidden="true"></div>
+
+            <div class="paper-sheet">
+              <div class="paper-sheet-inner">
+                <div class="seal"><span>J&J</span></div>
+                <h2 class="envelope-h1">Uma carta para você</h2>
+                <p class="envelope-p">Com carinho e gratidão, preparamos um convite especial.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTÃO FORA DO LAÇO -->
+          <div class="open-area">
+            <button class="open-btn" id="openInviteBtn" type="button" onclick="openInvite()">
+              Clique aqui
+            </button>
+            <p class="hint">Toque para desfazer o laço e abrir a carta</p>
+          </div>
+        </section>
+
+        <!-- ETAPA 2 (começa escondida) -->
+        <section class="invite" id="invite" hidden>
+          <div class="paper reveal">
+            <p class="msg">
+              <strong>Queridos padrinhos e madrinhas,</strong><br/>
+              É com alegria no coração que convidamos vocês para fazerem parte de um dos dias mais importantes da nossa vida.
+              A presença de vocês, como família escolhida, representa apoio, amor e oração na nossa caminhada.
+              <br/><br/>
+              Aceitam caminhar conosco, abençoar nossa união e estar ao nosso lado nesse novo capítulo?
+            </p>
+
+            <div class="signature">Com amor, Jackelyne &amp; Joadson</div>
+<div class="box reveal delay-1" style="margin-top:18px;">
+  <h3>Data e Local</h3>
+  <p style="margin:6px 0 10px; line-height:1.6;">
+    <strong>📅 Data:</strong><br>
+    25 de abril de 2026
+  </p>
+
+  <p style="margin:6px 0 10px; line-height:1.6;">
+    <strong>⛪ Cerimônia:</strong><br>
+    Igreja São Paulo Apóstolo<br>
+    Lot. Fonte das Águas<br>
+    Arembepe – Camaçari/BA
+  </p>
+
+  <p style="margin:6px 0 0; line-height:1.6;">
+    <strong>🎉 Festa:</strong><br>
+    Club A.U.V.A<br>
+    Vilarejo, Arembepe<br>
+    Camaçari – BA
+  </p>
+</div>
+            <div class="grid">
+              <div class="box reveal delay-1">
+                <h3>Traje dos Padrinhos</h3>
+                <img class="traje-img" src="assets/img/terno.jpg" alt="Traje dos padrinhos - terno">
+              </div>
+
+              <div class="box reveal delay-2">
+                <h3>Traje das Madrinhas</h3>
+                <img class="traje-img" src="assets/img/vestido.jpg" alt="Traje das madrinhas - vestido">
+              </div>
+            </div>
+
+            <div class="actions reveal delay-2">
+              <a class="btn btn-primary"
+                 href="https://docs.google.com/forms/d/e/1FAIpQLSe7Il8NyaxcRkqPgi3wK2uH9DDlWXPSoIrNqbYHOlWoj6jFPQ/viewform?usp=publish-editor"
+                 target="_blank" rel="noopener">
+                Preencher ficha de padrinhos
+              </a>
+
+              <button class="btn btn-secondary" id="toggleMusicBtn" type="button">
+                🔊 Pausar / Tocar música
+              </button>
+            </div>
+
+            <div class="docs reveal delay-3">
+              <h4>Documentos necessários (cópias)</h4>
+              <ul>
+                <li>RG</li>
+                <li>CPF</li>
+                <li>Comprovante de residência</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer">
+            Paleta: rosê • marsala • dourado — fundo floral — música ambiente
+          </div>
+        </section>
+      </div>
+
+      <audio id="bgMusic" preload="auto" loop>
+        <source src="assets/music/musica.mp3" type="audio/mpeg">
+      </audio>
+    </main>
+  </div>
+
+  <script>
+    function openInvite() {
+      const stageLetter = document.getElementById("stageLetter");
+      const invite = document.getElementById("invite");
+      const envelope = document.getElementById("envelope");
+      const openBtn = document.getElementById("openInviteBtn");
+      const music = document.getElementById("bgMusic");
+
+      if (openBtn) openBtn.disabled = true;
+      if (envelope) envelope.classList.add("opening");
+
+      setTimeout(() => {
+        if (stageLetter) stageLetter.hidden = true;
+        if (invite) invite.hidden = false;
+        if (invite) invite.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 650);
+
+      if (music) {
+        music.play().catch(() => {});
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const music = document.getElementById("bgMusic");
+      const toggle = document.getElementById("toggleMusicBtn");
+
+      if (toggle && music) {
+        toggle.addEventListener("click", async () => {
+          if (music.paused) {
+            try { await music.play(); toggle.textContent = "⏸️ Pausar música"; }
+            catch { toggle.textContent = "▶️ Tocar música"; }
+          } else {
+            music.pause();
+            toggle.textContent = "▶️ Tocar música";
+          }
+        });
+      }
+
+      const reveals = document.querySelectorAll(".reveal");
+      if (reveals.length) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add("active");
+          });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(el => observer.observe(el));
+      }
+    });
+  </script>
+</body>
+</html>
